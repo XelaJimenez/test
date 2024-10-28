@@ -1,3 +1,4 @@
+import java.util.*;
 class Test {
     int _x;
     public Test() {
@@ -30,18 +31,41 @@ class Test2 {
     }
 }
 class Stuff<T>  { // the T here will match the
-    private T _thing; // the T here
+    private ArrayList<T> _thing; // the T here
     public Stuff() {
-        _thing = null;
+        _thing = new ArrayList<T>();
     }
-    public Stuff(T t) {
-        _thing = t;
+    public Stuff(int size) {
+        _thing = new ArrayList<T>(size);
     }
-    public void setThing(T thing) {
-        _thing = thing;
+//    public void setThing(T thing) {
+//        _thing = thing;
+//    }
+//    public T getThing() {
+//        return _thing;
+//    }
+    public void addItem(T t) {
+        _thing.add(t);
     }
-    public T getThing() {
-        return _thing;
+    public T removeItem(int idx) {
+        if(idx >= 0 && idx < _thing.size()) {
+            T removed = _thing.remove(idx);
+            return removed;
+        }
+        return null;
+    }
+    public boolean findItem(T t) {
+        boolean found = false;
+        int i = 0;
+        while(i < _thing.size() && !found) {
+            if(_thing.get(i).equals(t))
+                found = true;
+            i++;
+        }
+        return found;
+    }
+    public void printItems() {
+
     }
     public void print() {
         if (_thing != null)
@@ -53,9 +77,9 @@ class Stuff<T>  { // the T here will match the
 public class Main {
     public static void main(String[] args) {
         Stuff<Test> s = new Stuff<Test>(); // instanciating a thing called stuff that can hold a test obj
-        s.print();
-        s.setThing(new Test(5));
-        s.print();
-        System.out.println(s.getThing().getX());
+        Stuff<Test> s2 = new Stuff<Test>(5);
+        s.addItem(new Test(3));
+        Test t = new Test(3);
+        System.out.println(s.findItem(t));
     }
 }
